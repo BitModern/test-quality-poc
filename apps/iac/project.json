@@ -1,0 +1,75 @@
+{
+  "name": "iac",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/iac/src",
+  "projectType": "application",
+  "targets": {
+    "bootstrap": {
+      "executor": "nx:run-commands",
+      "options": {
+        "color": true,
+        "cwd": "apps/iac",
+        "parallel": false,
+        "commands": ["npx cdk bootstrap"]
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "color": true,
+        "cwd": "apps/iac",
+        "all": true,
+        "require-approval": "never",
+        "commands": ["npx cdk deploy --all"]
+      }
+    },
+    "destroy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "color": true,
+        "cwd": "apps/iac",
+        "all": true,
+        "require-approval": "never",
+        "commands": ["npx cdk destroy --all"]
+      }
+    },
+    "synth": {
+      "executor": "nx:run-commands",
+      "options": {
+        "color": true,
+        "cwd": "apps/iac",
+        "parallel": false,
+        "all": true,
+        "commands": [
+          "npx cdk synthesize --outputs-file ./cdk-outputs.json --debug --all"
+        ]
+      }
+    },
+    "diff": {
+      "executor": "nx:run-commands",
+      "options": {
+        "color": true,
+        "cwd": "apps/iac",
+        "parallel": false,
+        "all": true,
+        "commands": ["npx cdk diff --all"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/iac/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/iac/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
