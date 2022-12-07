@@ -13,6 +13,16 @@
         "commands": ["npx cdk bootstrap"]
       }
     },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "color": true,
+        "cwd": "apps/iac",
+        "all": true,
+        "require-approval": "never",
+        "commands": ["tsc"]
+      }
+    },
     "deploy": {
       "executor": "nx:run-commands",
       "options": {
@@ -20,7 +30,7 @@
         "cwd": "apps/iac",
         "all": true,
         "require-approval": "never",
-        "commands": ["npx cdk deploy --all"]
+        "commands": ["npx cdk deploy --all --require-approval never"]
       }
     },
     "destroy": {

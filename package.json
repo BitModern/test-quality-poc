@@ -9,17 +9,17 @@
   },
   "private": true,
   "dependencies": {
+    "aws-cdk-lib": "^2.53.0",
+    "cdk8s": "^2.3.53",
+    "cdk8s-plus-24": "^2.0.0-rc.50",
+    "constructs": "^10.1.44",
     "core-js": "^3.6.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "regenerator-runtime": "0.13.7",
-    "tslib": "^2.3.0",
-    "aws-cdk-lib": "2.53.0",
-    "constructs": "^10.0.0"
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@types/babel__traverse": "7.18.2",
-    "@types/prettier": "2.6.0",
     "@nrwl/cli": "15.2.4",
     "@nrwl/cypress": "15.2.4",
     "@nrwl/eslint-plugin-nx": "15.2.4",
@@ -30,8 +30,10 @@
     "@nrwl/web": "15.2.4",
     "@nrwl/workspace": "15.2.4",
     "@testing-library/react": "13.4.0",
+    "@types/babel__traverse": "7.18.2",
     "@types/jest": "28.1.1",
     "@types/node": "18.7.18",
+    "@types/prettier": "2.6.0",
     "@types/react": "18.0.20",
     "@types/react-dom": "18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
