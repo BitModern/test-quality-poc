@@ -14,16 +14,8 @@ import {
   KubernetesVersion,
   NodeType,
 } from 'aws-cdk-lib/aws-eks';
-import {
-  InstanceSize,
-  InstanceType,
-  SecurityGroup,
-  Vpc,
-} from 'aws-cdk-lib/aws-ec2';
+import { InstanceType, SecurityGroup, Vpc } from 'aws-cdk-lib/aws-ec2';
 import { AutoScalingGroup, UpdatePolicy } from 'aws-cdk-lib/aws-autoscaling';
-import { Queue } from 'aws-cdk-lib/aws-sqs';
-import { Topic } from 'aws-cdk-lib/aws-sns';
-import { SqsSubscription } from 'aws-cdk-lib/aws-sns-subscriptions';
 
 export interface EksStackProps extends StackProps {
   vpc: Vpc;
@@ -117,7 +109,6 @@ export class EksStack extends Stack {
       },
     };
 
-    // option 1: use a construct
     new KubernetesManifest(this, 'hello-kub', {
       cluster: this.cluster,
       manifest: [deployment, service],

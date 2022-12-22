@@ -7,8 +7,8 @@ import { CdkStack } from '../lib/cdk-stack';
 //   region: process.env.CDK_DEFAULT_REGION
 // };
 const env = {
-  account: '014278456228',
-  region: 'us-east-1',
+  account: '092049816521',
+  region: 'us-east-2',
   stage: 'dev',
 };
 
