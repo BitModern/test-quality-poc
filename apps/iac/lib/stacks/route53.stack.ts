@@ -1,4 +1,4 @@
-import { Duration, Stack, StackProps } from 'aws-cdk-lib';
+import { Duration, RemovalPolicy, Stack, StackProps } from 'aws-cdk-lib';
 import { Cluster } from 'aws-cdk-lib/aws-eks';
 import {
   ARecord,
@@ -22,14 +22,17 @@ export class Route53Stack extends Stack {
 
     const { domainName, cluster, subdomainName } = props;
 
-    this.hostedZone = HostedZone.fromLookup(this, `hosted-zone`, {
-      domainName,
+    this.hostedZone = new HostedZone(this, `hosted-zone`, {
+      zoneName: domainName,
     });
+    this.hostedZone.applyRemovalPolicy(RemovalPolicy.DESTROY);
 
     // new ARecord(this, `subdomain`, {
     //   recordName: subdomainName,
     //   zone: this.hostedZone,
-    //   target: RecordTarget.fromAlias(new LoadBalancerTarget(loadBalancer)),
+    //   target: RecordTarget.fromAlias(
+    //     new LoadBalancerTarget(cluster.getServiceLoadBalancerAddress('eks-alb'))
+    //   ),
     //   ttl: Duration.minutes(1),
     // });
   }

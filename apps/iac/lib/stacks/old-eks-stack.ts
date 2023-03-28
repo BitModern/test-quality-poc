@@ -14,38 +14,37 @@ import {
   KubernetesVersion,
   NodeType,
 } from 'aws-cdk-lib/aws-eks';
-import { InstanceType, SecurityGroup, Vpc } from 'aws-cdk-lib/aws-ec2';
+import { InstanceType, SecurityGroup, IVpc } from 'aws-cdk-lib/aws-ec2';
 import { AutoScalingGroup, UpdatePolicy } from 'aws-cdk-lib/aws-autoscaling';
 
 export interface EksStackProps extends StackProps {
-  vpc: Vpc;
+  vpc: IVpc;
 }
 
 export interface EksProps extends StackProps {
   cluster: Cluster;
+  vpc: IVpc;
 }
 
 export class EksStack extends Stack {
   public readonly cluster: Cluster;
 
-  constructor(scope: Construct, id: string, props: StackProps) {
+  constructor(scope: Construct, id: string, props: EksStackProps) {
     super(scope, id, props);
 
-    const vpc = new Vpc(this, `tq-eks-vpc`, {
-      maxAzs: 3,
-    });
+    const { vpc } = props;
 
     // IAM role for our EC2 worker nodes
-    const workerRole = new Role(this, `tq-eks-worker-role`, {
+    const workerRole = new Role(this, `eks-worker-role`, {
       assumedBy: new ServicePrincipal('ec2.amazonaws.com'),
     });
 
-    const securityGroup = new SecurityGroup(this, `tq-eks-security-group`, {
+    const securityGroup = new SecurityGroup(this, `eks-security-group`, {
       vpc,
       allowAllOutbound: false,
     });
 
-    const onDemandASG = new AutoScalingGroup(this, `tq-eks-autoscaling-group`, {
+    const onDemandASG = new AutoScalingGroup(this, `eks-autoscaling-group`, {
       vpc,
       securityGroup,
       role: workerRole,
@@ -63,7 +62,7 @@ export class EksStack extends Stack {
       assumedBy: new AccountRootPrincipal(),
     });
 
-    this.cluster = new Cluster(this, `tq-eks-cluster`, {
+    this.cluster = new Cluster(this, `eks-cluster`, {
       vpc,
       defaultCapacity: 0, // we want to manage capacity our selves
       version: KubernetesVersion.V1_21,
@@ -117,11 +116,11 @@ export class EksStack extends Stack {
     this.cluster.connections.allowDefaultPortFromAnyIpv4();
     this.cluster.connectAutoScalingGroupCapacity(onDemandASG, {});
 
-    // const queue = new Queue(this, `tq-eks-queue`, {
+    // const queue = new Queue(this, `eks-queue`, {
     //   visibilityTimeout: Duration.seconds(300),
     // });
 
-    // const topic = new Topic(this, `tq-eks-topic`);
+    // const topic = new Topic(this, `eks-topic`);
 
     // topic.addSubscription(new SqsSubscription(queue));
   }

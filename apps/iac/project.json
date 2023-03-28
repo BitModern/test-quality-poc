@@ -18,8 +18,7 @@
       "options": {
         "color": true,
         "cwd": "apps/iac",
-        "all": true,
-        "require-approval": "never",
+        "parallel": false,
         "commands": ["tsc"]
       }
     },
@@ -28,8 +27,7 @@
       "options": {
         "color": true,
         "cwd": "apps/iac",
-        "all": true,
-        "require-approval": "never",
+        "parallel": false,
         "commands": ["npx cdk deploy --all --require-approval never"]
       }
     },
@@ -38,8 +36,7 @@
       "options": {
         "color": true,
         "cwd": "apps/iac",
-        "all": true,
-        "require-approval": "never",
+        "parallel": false,
         "commands": ["npx cdk destroy --all"]
       }
     },
@@ -49,7 +46,6 @@
         "color": true,
         "cwd": "apps/iac",
         "parallel": false,
-        "all": true,
         "commands": [
           "npx cdk synthesize --outputs-file ./cdk-outputs.json --debug --all"
         ]
@@ -61,7 +57,6 @@
         "color": true,
         "cwd": "apps/iac",
         "parallel": false,
-        "all": true,
         "commands": ["npx cdk diff --all"]
       }
     },
