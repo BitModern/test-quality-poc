@@ -10,7 +10,7 @@
   "private": true,
   "dependencies": {
     "@aws-cdk/lambda-layer-kubectl-v24": "^2.0.146",
-    "aws-cdk-lib": "^2.70.0",
+    "c": "^2.70.0",
     "cdk8s": "^2.3.53",
     "cdk8s-plus-24": "^2.0.0-rc.50",
     "constructs": "^10.1.44",
